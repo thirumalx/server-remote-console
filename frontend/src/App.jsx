@@ -1,34 +1,31 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Servers from './Servers'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState('home')
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app-root">
+      <header>
+        <h1>Server Remote Console</h1>
+        <nav>
+          <button onClick={() => setPage('home')}>Home</button>
+          <button onClick={() => setPage('servers')}>Servers</button>
+        </nav>
+      </header>
+
+      <main>
+        {page === 'home' && (
+          <section>
+            <h2>Welcome</h2>
+            <p>Use the Servers page to add and manage SSH target servers.</p>
+          </section>
+        )}
+
+        {page === 'servers' && <Servers />}
+      </main>
+    </div>
   )
 }
 
