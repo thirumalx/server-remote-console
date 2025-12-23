@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Web-based Linux System Control
+  profiles:
+    active: DEV
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  
