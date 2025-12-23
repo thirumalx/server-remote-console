@@ -114,10 +114,6 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
-				<configuration>
-					<installNodeAndNpm>false</installNodeAndNpm>
-				</configuration>
-				<configuration>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
