@@ -114,11 +114,9 @@
 							<artifactId>lombok</artifactId>
 						</path>
 					</annotationProcessorPaths>
+				<configuration>
+					<installNodeAndNpm>false</installNodeAndNpm>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<excludes>
 						<exclude>
@@ -127,6 +125,70 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.12.0</version>
+				<configuration>
+					<installNodeAndNpm>true</installNodeAndNpm>
+					<nodeVersion>v20.19.0</nodeVersion>
+					<npmVersion>9.8.1</npmVersion>
+					<installDirectory>${project.basedir}/node</installDirectory>
+				</configuration>
+
+				<executions>
+					<!-- ensure node is installed locally for the npm executions -->
+
+					<!-- npm install -->
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>install</arguments>
+							<workingDirectory>${project.basedir}/frontend</workingDirectory>
+						</configuration>
+					</execution>
+
+					<!-- npm build -->
+					<execution>
+						<id>npm build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>run build</arguments>
+							<workingDirectory>${project.basedir}/frontend</workingDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<id>copy-react-build</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+							<resources>
+								<resource>
+									<directory>frontend/dist</directory> <!-- Vite -->
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
